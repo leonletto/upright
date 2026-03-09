@@ -21,9 +21,9 @@ class Upright::Probes::Uptime
       end
 
       def label_selector(probe_type)
-        if probe_type.present?
-          "{type=\"#{probe_type}\"}"
-        end
+        matchers = [ "alert_severity!=\"\"" ]
+        matchers << "type=\"#{probe_type}\"" if probe_type.present?
+        "{#{matchers.join(",")}}"
       end
 
       def prometheus_client
